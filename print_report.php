@@ -128,9 +128,28 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
             color: white;
             border-radius: 4px;
          }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        .bodyelement {
+            flex: 1;
+        }
 
-         @media print {
+        footer {
+            margin-top: auto;
+        }
+        .footer-right {
+            position: static; /* important */
+            margin-top: 20px;
+        }
+
+        .bodyelement {
+            margin-bottom: 0;
+        }
+        @media print {
             .footer-common {
                 /* position: fixed;
                 bottom: 0;
@@ -148,7 +167,7 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
             }
 
             .bodyelement {
-                margin-bottom: 70px;
+                /* margin-bottom: 70px; */
                 /* border: 1px solid red; */
             }
 
@@ -218,7 +237,7 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
         }
         @media print {
             .footer-right {
-                position: fixed;
+                /* position: fixed; */
                 bottom: 20px;   /* distance from bottom of page */
                 right: 30px;    /* adjust if you want it right-aligned */
                 text-align: right;
@@ -226,8 +245,8 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
             }
         }
         .footer-right {
-                position: fixed;
-                bottom: 20px;   /* distance from bottom of page */
+                /* position: fixed; */
+                /* bottom: 20px;   distance from bottom of page */
                 right: 30px;    /* adjust if you want it right-aligned */
                 text-align: right;
                 font-size: 14px;
@@ -247,9 +266,7 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
     <div class="no-print p-4 border bg-black">
         <button id="printBtn" onclick="window.print()" class="bg-blue-500 text-white px-3 py-1 rounded">🖨 Print</button>
     </div>
-    <img src="./Image_for_Report/Background.png"
-        style="position: fixed; top: 20%; left: 0; width: 100%;
-              z-index: -1; object-fit: cover;" />
+    <img src="./Image_for_Report/Background.png" style="position: fixed; top: 20%; left: 0; width: 100%; z-index: -1; object-fit: cover;" />
 
 
     <header class="m-1 border-black border-2px">
@@ -272,95 +289,94 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
                 </span>
             </div>
         </div>
-       <div class="w-full header_22nd grid grid-cols-3 gap-2">
-    <!-- Left: Patient Information -->
-    <div class="col-span-2 border border-black p-2 rounded-2xl bg-white">
-        <div class="space-y-2 text-sm">
+        <div class="w-full header_22nd grid grid-cols-3 gap-2">
+            <!-- Left: Patient Information -->
+            <div class="col-span-2 border border-black p-2 rounded-2xl bg-white">
+                <div class="space-y-2 text-sm">
 
-            <!-- Name + Lab No on the same line -->
-            <div class="flex justify-between items-center">
-                <div class="flex whitespace-nowrap">
-                    <span class="font-bold w-32">Name of Patient:</span>
-                    <span class="font-semibold"><?php echo $reportValues['clientName']; ?></span>
-                </div>
-                <div class="flex whitespace-nowrap">
-                    <span class="font-bold mr-2">Lab No:</span>
-                    <span class="font-semibold"><?php echo $reportValues['lab_no']; ?></span>
+                    <!-- Name + Lab No on the same line -->
+                    <div class="flex justify-between items-center">
+                        <div class="flex whitespace-nowrap">
+                            <span class="font-bold w-32">Name of Patient:</span>
+                            <span class="font-semibold"><?php echo $reportValues['clientName']; ?></span>
+                        </div>
+                        <div class="flex whitespace-nowrap">
+                            <span class="font-bold mr-2">Lab No:</span>
+                            <span class="font-semibold"><?php echo $reportValues['lab_no']; ?></span>
+                        </div>
+                    </div>
+
+                    <!-- Age + Sex -->
+                    <div class="grid grid-cols-2 gap-2 whitespace-nowrap">
+                        <div class="flex">
+                            <span class="font-bold w-10">Age:</span>
+                            <span class="font-semibold"><?php echo $reportValues['age']; ?></span>
+                        </div>
+                        <div class="flex whitespace-nowrap">
+                            <span class="font-bold w-10">Sex:</span>
+                            <span class="font-semibold"><?php echo $reportValues['sex']; ?></span>
+                        </div>
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="flex whitespace-nowrap">
+                            <span class="font-bold w-28">Date of Report:</span>
+                            <span class="font-normal">
+                                <?php echo date('d-m-Y', strtotime($reportValues['date_of_report'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex whitespace-nowrap">
+                            <span class="font-bold w-28">Date of Receipt:</span>
+                            <span class="font-normal">
+                                <?php echo date('d-m-Y', strtotime($reportValues['date_of_recipt'])); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Doctor -->
+                    <div class="flex whitespace-nowrap">
+                        <span class="font-bold w-20">Doctor:</span>
+                        <span class="font-semibold"><?php echo $reportValues['reffering_doctor']; ?></span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Age + Sex -->
-            <div class="grid grid-cols-2 gap-2 whitespace-nowrap">
-                <div class="flex">
-                    <span class="font-bold w-10">Age:</span>
-                    <span class="font-semibold"><?php echo $reportValues['age']; ?></span>
-                </div>
-                <div class="flex whitespace-nowrap">
-                    <span class="font-bold w-10">Sex:</span>
-                    <span class="font-semibold"><?php echo $reportValues['sex']; ?></span>
-                </div>
-            </div>
-
-            <!-- Dates -->
-            <div class="grid grid-cols-2 gap-2">
-                <div class="flex whitespace-nowrap">
-                    <span class="font-bold w-28">Date of Report:</span>
-                    <span class="font-normal">
-                        <?php echo date('d-m-Y', strtotime($reportValues['date_of_report'])); ?>
-                    </span>
-                </div>
-                <div class="flex whitespace-nowrap">
-                    <span class="font-bold w-28">Date of Receipt:</span>
-                    <span class="font-normal">
-                        <?php echo date('d-m-Y', strtotime($reportValues['date_of_recipt'])); ?>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Doctor -->
-            <div class="flex whitespace-nowrap">
-                <span class="font-bold w-20">Doctor:</span>
-                <span class="font-semibold"><?php echo $reportValues['reffering_doctor']; ?></span>
+            <!-- Right: Logo -->
+            <div class="header_3rd header_1st flex justify-center items-center rounded-2xl">
+                <img src="./Image_for_Report/LabPic.png" width="180px" alt="" style="transform: scale(0.9);" class="rounded-sm">
             </div>
         </div>
-    </div>
-
-    <!-- Right: Logo -->
-    <div class="header_3rd header_1st flex justify-center items-center rounded-2xl">
-        <img src="./Image_for_Report/LabPic.png" width="180px" alt="" style="transform: scale(0.9);" class="rounded-sm">
-    </div>
-</div>
-<div class="footer-common">
-    <b><i>REPORT OF</i><b> 
-        <i><?php echo $reportValues['footer_text']; ?></i>
-        <b><i>EXAMINATION</i><b>
-
+        <div class="footer-common">
+            <b><i>REPORT OF</i><b> 
+            <i><?php echo $reportValues['footer_text']; ?></i>
+            <b><i>EXAMINATION</i><b>
         </div>
-
+    </header>
 
   
-    <div class="m-1 bodyelement ">
+    <div class="m-1 bodyelement">
         <?php
-        $is_Examinition = false;
-        $_EXAMINATION_Array = [];
-        $is_normal_fields = false;
-        foreach ($reportItems as $reportItem) {
-            // echo "<br>-->".$reportItem['EXAMINATION_name']."<br>";
-            $_EXAMINATION_name = $reportItem['EXAMINATION_name'];
-            // echo "<br>$_EXAMINATION_name<br>";
-            if (in_array($_EXAMINATION_name, $_EXAMINATION_Array)) {
-                // echo "the >".$_EXAMINATION_name."<br>";
-            } else {
-                // echo "<br>.".$_EXAMINATION_name."<br>";
-                if ( !empty($_EXAMINATION_name) && $_EXAMINATION_name !== "undefined" && $_EXAMINATION_name !== null) {
-                    $_EXAMINATION_Array[] = $_EXAMINATION_name;
-                }
-                else{
-                    // echo("this is an empty field ");
-                    $is_normal_fields = true;
+            $is_Examinition = false;
+            $_EXAMINATION_Array = [];
+            $is_normal_fields = false;
+            foreach ($reportItems as $reportItem) {
+                // echo "<br>-->".$reportItem['EXAMINATION_name']."<br>";
+                $_EXAMINATION_name = $reportItem['EXAMINATION_name'];
+                // echo "<br>$_EXAMINATION_name<br>";
+                if (in_array($_EXAMINATION_name, $_EXAMINATION_Array)) {
+                    // echo "the >".$_EXAMINATION_name."<br>";
+                } else {
+                    // echo "<br>.".$_EXAMINATION_name."<br>";
+                    if ( !empty($_EXAMINATION_name) && $_EXAMINATION_name !== "undefined" && $_EXAMINATION_name !== null) {
+                        $_EXAMINATION_Array[] = $_EXAMINATION_name;
+                    }
+                    else{
+                        // echo("this is an empty field ");
+                        $is_normal_fields = true;
+                    }
                 }
             }
-        }
         ?>
         <?php 
             $extrafield = $reportItems[0]['mainexamination'];
@@ -435,59 +451,64 @@ $reportFileName = 'report-' . $reportValues['clientName'] . '.pdf';
                     <th>Test Name   </th>
                     <th>Report Value</th>
                     <?php 
-                    $extrafield = $reportItems[0]['mainexamination'];
-                    if ($extrafield == "BloodRoutine") {
-                        echo "<th></th>";
-                    }
+                        $extrafield = $reportItems[0]['mainexamination'];
+                        if ($extrafield == "BloodRoutine") {
+                            echo "<th></th>";
+                        }
                     ?>
                     <th>Normal Value</th>
                 </tr>
 
                 <?php
-                
-                $count = 0;
-                $EXAMINATION_Array = [];
-                foreach ($reportItems as $reportItem) {
-                    
-                    $EXAMINATION_name = $reportItem['EXAMINATION_name'];
-                    $mainexamination = $reportItem['mainexamination'];
-                    $EXAMINATION_name1;
-                    // echo "<script>alert('->".$mainexamination."<-');</script>";
-                    if ($EXAMINATION_name == "undefined" || $EXAMINATION_name == null ) {
-                        $count++;
-                        // <td>' . htmlspecialchars($reportItem['report_no'])      . '</td>
-                        echo '
-                            <tr>
-                                <td>' . htmlspecialchars($reportItem['test_name'])    . '</td>
-                                <td>' . htmlspecialchars($reportItem['result'])       . '</td>
+                    $count = 0;
+                    $EXAMINATION_Array = [];
+                    foreach ($reportItems as $reportItem) {
+                        
+                        $EXAMINATION_name = $reportItem['EXAMINATION_name'];
+                        $mainexamination = $reportItem['mainexamination'];
+                        $EXAMINATION_name1;
+                        // echo "<script>alert('->".$mainexamination."<-');</script>";
+                        if ($EXAMINATION_name == "undefined" || $EXAMINATION_name == null ) {
+                            $count++;
+                            // <td>' . htmlspecialchars($reportItem['report_no'])      . '</td>
+                            echo '
+                                <tr>
+                                    <td>' . htmlspecialchars($reportItem['test_name'])    . '</td>
+                                    <td>' . htmlspecialchars($reportItem['result'])       . '</td>
+                                    ';
+                            if ($extrafield == "BloodRoutine") {
+                                echo '<td>' . htmlspecialchars($reportItem['extrafield'])   . '</td>';
+                            }
+                            echo '
+                                    <td>' . htmlspecialchars($reportItem['normal_value']) . '</td>
+                                </tr>
                                 ';
-                        if ($extrafield == "BloodRoutine") {
-                            echo '<td>' . htmlspecialchars($reportItem['extrafield'])   . '</td>';
-                        }
-                        echo '
-                                <td>' . htmlspecialchars($reportItem['normal_value']) . '</td>
-                            </tr>
-                            ';
-                    } else {
-                        // echo "--> $EXAMINATION_name <--";
-                        if (in_array($EXAMINATION_name, $EXAMINATION_Array)) {
                         } else {
-                            $EXAMINATION_Array[] = $EXAMINATION_name;
+                            // echo "--> $EXAMINATION_name <--";
+                            if (in_array($EXAMINATION_name, $EXAMINATION_Array)) {
+                            } else {
+                                $EXAMINATION_Array[] = $EXAMINATION_name;
+                            }
                         }
                     }
-                }
                 ?>
 
             </table>
         </div>
-
-        <div class="footer-right px-3">
-            <p class="flex flex-row-reverse"><img src="sign.png" width="170" style="margin-bottom: 5px;" class=""></p>
-            <p><strong>Consultant Pathologist</strong><br>
-                Dr. Ramesh Ch Patra <br>
-                M.B.B.S (Cal), D.C.P</p>
-        </div>
     </div>
+
+    <footer>
+        <div class="footer-right px-3 ">
+            <p class="flex flex-row-reverse"><img src="sign.png" width="170" style="margin-bottom: 5px;" class=""></p>
+            <p>
+                <strong>Consultant Pathologist</strong>
+                <br>
+                Dr. Ramesh Ch Patra 
+                <br>
+                M.B.B.S (Cal), D.C.P
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
